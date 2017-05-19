@@ -1,4 +1,5 @@
-﻿using AppHello.Views;
+﻿using AppHello.ViewModels;
+using AppHello.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace AppHello
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new InicioView());
+			MainPage = new NavigationPage(new ContatoView());
 		}
 
 		protected override void OnStart()

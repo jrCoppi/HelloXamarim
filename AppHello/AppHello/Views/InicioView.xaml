@@ -12,11 +12,24 @@
             <Label 
                 Text="{Binding Hello}"
             />
+            <Entry
+                Text="{Binding Nome}"
+             />
+            <Label 
+                Text="{Binding Nome}"
+            />
+
+            <Button
+		        Text="Limpar"
+		        Command="{Binding LimparCommand}"
+            />
+
             <Button
 		        Text="Nova Pagina"
 		        Command="{Binding PaginaCommand}"
             />
 
+            <ActivityIndicator IsRunning="{Binding IsBusy}" />
         </StackLayout>
     </ContentPage.Content>
 
