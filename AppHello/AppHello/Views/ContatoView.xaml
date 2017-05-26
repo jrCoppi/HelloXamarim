@@ -3,6 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppHello.Views.ContatoView"
              Title="ContatoView">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+			Text="Add"
+			Command="{Binding AddContatoCommand}"
+		/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Button Text="Carregar Dados" Command="{Binding CarregaDadosCommand}"/>

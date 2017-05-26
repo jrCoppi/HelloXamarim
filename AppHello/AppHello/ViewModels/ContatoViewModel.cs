@@ -9,12 +9,19 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using AppHello.Models;
+using AppHello.Helpers;
+using AppHello.Views;
 
 namespace AppHello.ViewModels
 {
 	class ContatoViewModel : BaseViewModel
 	{
 		public ICommand CarregaDadosCommand => new Command(async () => await CarregaDados());
+		public ICommand AddContatoCommand => new Command(async () => await AddContato());
+
+		public ContatoViewModel()
+		{
+		}
 
 		private List<ContatoModel> _contatos;
 		public List<ContatoModel> Contatos
@@ -25,6 +32,11 @@ namespace AppHello.ViewModels
 				_contatos = value;
 				OnPropertyChanged("Contatos");
 			}
+		}
+
+		private async Task AddContato()
+		{
+			await NavigationHelper.Instance.GotoDetails(new NovoContatoView(new ContatoModel()));
 		}
 
 		private async Task CarregaDados()
@@ -38,7 +50,7 @@ namespace AppHello.ViewModels
 			Contatos = JsonConvert.DeserializeObject<List<ContatoModel>>(json);
 		}
 
-		public ContatoViewModel()
+		protected void atualizaListaContato(ContatoModel novoContato)
 		{
 
 		}

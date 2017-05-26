@@ -50,11 +50,15 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ContatoViewModel.cs" />
     <Compile Include="ViewModels\InicioViewModel.cs" />
+    <Compile Include="ViewModels\NovoContatoViewModel.cs" />
     <Compile Include="Views\ContatoView.xaml.cs">
       <DependentUpon>ContatoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InicioView.xaml.cs">
       <DependentUpon>InicioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NovoContatoView.xaml.cs">
+      <DependentUpon>NovoContatoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SegundoView.xaml.cs">
       <DependentUpon>SegundoView.xaml</DependentUpon>
@@ -110,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GradeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\NovoContatoView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

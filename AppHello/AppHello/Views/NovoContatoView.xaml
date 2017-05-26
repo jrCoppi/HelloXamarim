@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppHello.Views.NovoContatoView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label 
+                Text="Nome"
+            />
+            <Entry
+                Text="{Binding Contato.Nome}"
+                Placeholder="Nome"
+             />
+            
+            <Label 
+                Text="Email"
+            />
+            <Entry 
+                Text="{Binding Contato.Email}"
+                Placeholder="Email"
+            />
+
+            <Label 
+                Text="Data de Nascimento"
+            />
+            <Entry
+                Text="{Binding Contato.DataNascimento}"
+                Placeholder="Data de Nascimento"
+             />
+
+            <Label 
+                Text="Dia de Vencimento do Cartão"
+            />
+            <Entry 
+                Text="{Binding Contato.DiaVencimentoCartao}"
+                Placeholder="Dia de Vencimento do Cartão"
+            />
+
+            <Button
+		        Text="Confirmar"
+		        Command="{Binding SalvarContatoCommand}"
+            />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
