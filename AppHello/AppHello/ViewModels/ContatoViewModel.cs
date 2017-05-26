@@ -7,12 +7,25 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Net;
 using System.Net.Http;
+using Newtonsoft.Json;
+using AppHello.Models;
 
 namespace AppHello.ViewModels
 {
 	class ContatoViewModel : BaseViewModel
 	{
 		public ICommand CarregaDadosCommand => new Command(async () => await CarregaDados());
+
+		private List<ContatoModel> _contatos;
+		public List<ContatoModel> Contatos
+		{
+			get { return _contatos; }
+			set
+			{
+				_contatos = value;
+				OnPropertyChanged("Contatos");
+			}
+		}
 
 		private async Task CarregaDados()
 		{
@@ -21,8 +34,8 @@ namespace AppHello.ViewModels
 
 			var httpClient = new HttpClient();
 			var response = await httpClient.SendAsync(request);
-			var json = response.Content.ReadAsStringAsync();
-			var teste = "";
+			var json = await response.Content.ReadAsStringAsync();
+			Contatos = JsonConvert.DeserializeObject<List<ContatoModel>>(json);
 		}
 
 		public ContatoViewModel()

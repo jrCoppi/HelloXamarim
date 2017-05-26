@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppHello.GradeView"
+             Title="GradeView">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="Yellow">
+                <Label Text="Texto 0 0" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" Grid.Row="0" BackgroundColor="Green">
+                <Label Text="Texto 1 0" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="Red">
+                <Label Text="Texto 0 1" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" Grid.Row="1" BackgroundColor="Magenta">
+                <Label Text="Texto 1 1" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
