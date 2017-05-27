@@ -5,6 +5,9 @@ namespace AppHello.Models
 {
 	public class ContatoModel
 	{
+		[JsonProperty("id")]
+		public string Id { get; set; }
+
 		[JsonProperty("nome")]
 		public string Nome { get; set; }
 

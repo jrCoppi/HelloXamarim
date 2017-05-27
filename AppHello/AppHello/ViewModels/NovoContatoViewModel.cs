@@ -37,27 +37,42 @@ namespace AppHello.ViewModels
 		{
 			this.IsBusy = true;
 			string url = "https://cursounimestre.azurewebsites.net/Tables/contato";
-
 			var httpClient = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Post, url);
+			HttpMethod metodo = HttpMethod.Post;
+
+			if (Contato.Id != null)
+			{
+				metodo = HttpMethod.Put;
+				//url = "https://cursounimestre.azurewebsites.net/Tables/contato/" + Contato.Id; 
+			}
+
+
+			var request = new HttpRequestMessage(metodo, url);
 			request.Headers.Add("ZUMO-API-VERSION", "2.0.0");
 			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-			request.Content = new StringContent(
-				JsonConvert.SerializeObject(_contato),
-				Encoding.UTF8,
-				"application/json"
-			);
+
+			try
+			{
+				request.Content = new StringContent(
+					JsonConvert.SerializeObject(Contato),
+					Encoding.UTF8,
+					"application/json"
+				);
 
 
-			HttpResponseMessage response = await httpClient.SendAsync(request);
+				HttpResponseMessage response = await httpClient.SendAsync(request);
 
-			if (response.IsSuccessStatusCode == false)
-				throw new Exception(response.ReasonPhrase);
+				if (response.IsSuccessStatusCode == false)
+					throw new Exception(response.ReasonPhrase);
+			} catch (Exception e){
+				throw new Exception(e.Message);
+			}
+			
 
-			string result = await response.Content.ReadAsStringAsync();
-			ContatoModel contato = JsonConvert.DeserializeObject<ContatoModel>(result);
-			//Passar a instância da contatoview pra novocontatoview ou singleton?
+			//string result = await response.Content.ReadAsStringAsync();
+			//ContatoModel contato = JsonConvert.DeserializeObject<ContatoModel>(result);
+
 			this.IsBusy = false;
 			await NavigationHelper.Instance.GoBack();
 		}

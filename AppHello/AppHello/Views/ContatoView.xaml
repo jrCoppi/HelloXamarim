@@ -15,12 +15,15 @@
             <Button Text="Carregar Dados" Command="{Binding CarregaDadosCommand}"/>
 
 
-            <ListView ItemsSource="{Binding Contatos}">
+            <ListView 
+                ItemsSource="{Binding Contatos}"
+                ItemTapped="OnItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell 
                                 Text="{Binding Nome}" 
                                 Detail="{Binding Email}" 
+                                Command="{Binding }"
                             />
                     </DataTemplate>
                 </ListView.ItemTemplate>

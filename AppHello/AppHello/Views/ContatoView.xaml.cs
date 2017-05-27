@@ -1,4 +1,6 @@
-﻿using AppHello.ViewModels;
+﻿using AppHello.Helpers;
+using AppHello.Models;
+using AppHello.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,13 @@ namespace AppHello.Views
 		{
 			InitializeComponent();
 			BindingContext = new ContatoViewModel();
+		}
+
+		private async void OnItemTapped(object sender, ItemTappedEventArgs e)
+		{
+			(sender as ListView).SelectedItem = null;
+			var contato = e.Item as ContatoModel;
+			await NavigationHelper.Instance.GotoDetails(new NovoContatoView(contato));
 		}
 	}
 }
