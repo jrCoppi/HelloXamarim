@@ -41,6 +41,7 @@ namespace AppHello.ViewModels
 
 		private async Task CarregaDados()
 		{
+			IsBusy = true;
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://cursounimestre.azurewebsites.net/Tables/contato");
 			request.Headers.Add("ZUMO-API-VERSION", "2.0.0");
 
@@ -48,6 +49,7 @@ namespace AppHello.ViewModels
 			var response = await httpClient.SendAsync(request);
 			var json = await response.Content.ReadAsStringAsync();
 			Contatos = JsonConvert.DeserializeObject<List<ContatoModel>>(json);
+			IsBusy = false;
 		}
 
 		protected void atualizaListaContato(ContatoModel novoContato)

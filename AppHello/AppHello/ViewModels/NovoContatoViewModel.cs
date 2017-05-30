@@ -39,13 +39,13 @@ namespace AppHello.ViewModels
 			string url = "https://cursounimestre.azurewebsites.net/Tables/contato";
 			var httpClient = new HttpClient();
 			HttpMethod metodo = HttpMethod.Post;
+			
 
 			if (Contato.Id != null)
 			{
-				metodo = HttpMethod.Put;
-				//url = "https://cursounimestre.azurewebsites.net/Tables/contato/" + Contato.Id; 
+				metodo = new HttpMethod("PATCH");
+				url = "https://cursounimestre.azurewebsites.net/Tables/contato/" + Contato.Id; 
 			}
-
 
 			var request = new HttpRequestMessage(metodo, url);
 			request.Headers.Add("ZUMO-API-VERSION", "2.0.0");
