@@ -15,16 +15,19 @@ namespace AppHello.Helpers
 
 		private NavigationHelper() { }
 
+		//Busca a main page
 		private NavigationPage GetMainPage()
 		{
 			return Application.Current.MainPage as NavigationPage;
 		}
 
+		//Abre uma pagina sobre a atual
 		public async Task GotoDetails(Page page)
 		{
 			await GetMainPage().PushAsync(page);
 		}
 
+		//Votla uma pagina
 		public async Task GoBack()
 		{
 			await GetMainPage().PopAsync();

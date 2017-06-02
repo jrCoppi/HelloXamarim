@@ -1,12 +1,6 @@
 ﻿using AppHello.Helpers;
 using AppHello.Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -37,31 +31,25 @@ namespace AppHello.ViewModels
 		//deleta os contatos da API
 		private async Task ApagarContato()
 		{
-			if (string.IsNullOrEmpty(Contato.Id))
-			{
+			bool continuar = await Application.Current.MainPage.DisplayAlert("Apagar Contato", "Deseja apagar o contato?", "Sim", "Não");
+
+			if (continuar == false)
 				return;
-			}
 
-			bool continuar = await Application.Current.MainPage.DisplayAlert("Apagar Contato", "Deseja apagar o contato?","Sim","Não");
-
-			if(continuar == false)
+			try
 			{
-				return;
+				IsBusy = true;
+				await APIHelper.Instance.Delete(Contato.Id);
 			}
-
-			IsBusy = true;
-
-			string url = $"https://cursounimestre.azurewebsites.net/Tables/contato/{Contato.Id}";
-
-			var request = new HttpRequestMessage(HttpMethod.Delete, url);
-			request.Headers.Add("ZUMO-API-VERSION", "2.0.0");
-
-			var httpClient = new HttpClient();
-			var response = await httpClient.SendAsync(request);
-			var json = await response.Content.ReadAsStringAsync();
-			IsBusy = false;
-
-			await NavigationHelper.Instance.GoBack();
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+			finally
+			{
+				IsBusy = false;
+				await NavigationHelper.Instance.GoBack();
+			}
 		}
 
 		//Edita ou Insere um contato
