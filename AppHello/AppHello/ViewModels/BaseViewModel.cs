@@ -13,9 +13,11 @@ namespace AppHello.ViewModels
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		//Sobreescreve método onpropertychange
 		protected void OnPropertyChanged([CallerMemberName] string name = null) =>
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+		//carregando > spinner
 		private bool _isBusy;
 		public bool IsBusy
 		{

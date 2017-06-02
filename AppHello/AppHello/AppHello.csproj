@@ -38,6 +38,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringToBooleanConverter.cs" />
+    <Compile Include="Helpers\APIHelper.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Models\ContatoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

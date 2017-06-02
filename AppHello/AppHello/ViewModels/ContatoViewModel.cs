@@ -16,13 +16,13 @@ namespace AppHello.ViewModels
 {
 	class ContatoViewModel : BaseViewModel
 	{
+		// Declaração de um Command
 		public ICommand CarregaDadosCommand => new Command(async () => await CarregaDados());
 		public ICommand AddContatoCommand => new Command(async () => await AddContato());
 
-		public ContatoViewModel()
-		{
-		}
+		public ContatoViewModel(){}
 
+		//Declaração padrão de variaveis
 		private List<ContatoModel> _contatos;
 		public List<ContatoModel> Contatos
 		{
@@ -34,11 +34,13 @@ namespace AppHello.ViewModels
 			}
 		}
 
+		//Direciona para a pagina de novo contato
 		private async Task AddContato()
 		{
 			await NavigationHelper.Instance.GotoDetails(new NovoContatoView(new ContatoModel()));
 		}
 
+		//carrega os dados da API
 		private async Task CarregaDados()
 		{
 			IsBusy = true;
@@ -50,11 +52,6 @@ namespace AppHello.ViewModels
 			var json = await response.Content.ReadAsStringAsync();
 			Contatos = JsonConvert.DeserializeObject<List<ContatoModel>>(json);
 			IsBusy = false;
-		}
-
-		protected void atualizaListaContato(ContatoModel novoContato)
-		{
-
 		}
 	}
 }

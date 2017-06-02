@@ -16,6 +16,7 @@ namespace AppHello.ViewModels
 	class NovoContatoViewModel : BaseViewModel
 	{
 		public ICommand SalvarContatoCommand => new Command(async () => await SalvarContato());
+		public ICommand ApagarDadosCommand => new Command(async () => await ApagarContato());
 
 		public NovoContatoViewModel (ContatoModel novoContato)
 		{
@@ -33,48 +34,60 @@ namespace AppHello.ViewModels
 			}
 		}
 
-		private async Task SalvarContato()
+		//deleta os contatos da API
+		private async Task ApagarContato()
 		{
-			this.IsBusy = true;
-			string url = "https://cursounimestre.azurewebsites.net/Tables/contato";
-			var httpClient = new HttpClient();
-			HttpMethod metodo = HttpMethod.Post;
-			
-
-			if (Contato.Id != null)
+			if (string.IsNullOrEmpty(Contato.Id))
 			{
-				metodo = new HttpMethod("PATCH");
-				url = "https://cursounimestre.azurewebsites.net/Tables/contato/" + Contato.Id; 
+				return;
 			}
 
-			var request = new HttpRequestMessage(metodo, url);
+			bool continuar = await Application.Current.MainPage.DisplayAlert("Apagar Contato", "Deseja apagar o contato?","Sim","Não");
+
+			if(continuar == false)
+			{
+				return;
+			}
+
+			IsBusy = true;
+
+			string url = $"https://cursounimestre.azurewebsites.net/Tables/contato/{Contato.Id}";
+
+			var request = new HttpRequestMessage(HttpMethod.Delete, url);
 			request.Headers.Add("ZUMO-API-VERSION", "2.0.0");
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+			var httpClient = new HttpClient();
+			var response = await httpClient.SendAsync(request);
+			var json = await response.Content.ReadAsStringAsync();
+			IsBusy = false;
 
+			await NavigationHelper.Instance.GoBack();
+		}
+
+		//Edita ou Insere um contato
+		//Método async pois tem operações await nele, por conta disso ele é um TREAD
+		private async Task SalvarContato()
+		{
 			try
 			{
-				request.Content = new StringContent(
-					JsonConvert.SerializeObject(Contato),
-					Encoding.UTF8,
-					"application/json"
-				);
+				this.IsBusy = true;
 
+				if (Contato.Id != null)
+				{
+					await APIHelper.Instance.Patch(Contato);
+					return;
+				}
 
-				HttpResponseMessage response = await httpClient.SendAsync(request);
-
-				if (response.IsSuccessStatusCode == false)
-					throw new Exception(response.ReasonPhrase);
+				await APIHelper.Instance.Post(Contato);
 			} catch (Exception e){
 				throw new Exception(e.Message);
 			}
-			
+			finally
+			{
+				this.IsBusy = false;
+				await NavigationHelper.Instance.GoBack();
+			}
 
-			//string result = await response.Content.ReadAsStringAsync();
-			//ContatoModel contato = JsonConvert.DeserializeObject<ContatoModel>(result);
-
-			this.IsBusy = false;
-			await NavigationHelper.Instance.GoBack();
 		}
 	}
 }

@@ -1,9 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppHello.Views.NovoContatoView">
+             x:Class="AppHello.Views.NovoContatoView"
+             xmlns:converters="clr-namespace:AppHello.Converters"
+             Title="Novo Contato">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="10">
+            <Button 
+                IsVisible="{Binding Contato.Id, Converter={converters:StringToBooleanConverter}}"
+                Text="Apagar Registro"
+                Command="{Binding ApagarDadosCommand}"/>
+            
             <Label 
                 Text="Nome"
             />
@@ -15,9 +22,12 @@
             <Label 
                 Text="Email"
             />
+            
+            <!-- Definir tipos diferntes de keyboard -->
             <Entry 
                 Text="{Binding Contato.Email}"
                 Placeholder="Email"
+                Keyboard="Email"
             />
 
             <Label 
