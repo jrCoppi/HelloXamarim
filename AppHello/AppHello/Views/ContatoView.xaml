@@ -14,7 +14,7 @@
 
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Button Text="Carregar Dados" Command="{Binding CarregaDadosCommand}"/>
+            <Button Text="Testar" Command="{Binding TesteCommand}"/>
 
             <!-- Lista de Itens, tem a origem dos dados e dentro é possivel manipular eles -->
             <ListView 

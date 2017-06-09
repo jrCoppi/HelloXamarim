@@ -1,4 +1,6 @@
-﻿using AppHello.ViewModels;
+﻿using AppHello.Interfaces;
+using AppHello.Models;
+using AppHello.ViewModels;
 using AppHello.Views;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,15 @@ namespace AppHello
 		{
 			InitializeComponent();
 
+			criaBanco();
+
 			MainPage = new NavigationPage(new ContatoView());
+		}
+
+		private void criaBanco()
+		{
+			var connection = DependencyService.Get<ISQLite>().GetConnection();
+			connection.CreateTable<ContatoModel>();
 		}
 
 		protected override void OnStart()

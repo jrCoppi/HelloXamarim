@@ -62,7 +62,7 @@ namespace AppHello.Helpers
 		}
 
 		//chamada Select
-		public async Task Get()
+		public async Task Get() 
 		{
 			try
 			{

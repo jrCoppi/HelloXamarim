@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 using AppHello.Models;
 using AppHello.Helpers;
 using AppHello.Views;
+using AppHello.Interfaces;
+using SQLite;
+using System.Linq;
 
 namespace AppHello.ViewModels
 {
@@ -15,8 +18,12 @@ namespace AppHello.ViewModels
 		// Declaração de um Command
 		public ICommand CarregaDadosCommand => new Command(async () => await CarregaDados());
 		public ICommand AddContatoCommand => new Command(async () => await AddContato());
+		public ICommand TesteCommand => new Command(async () => await Teste());
+		private SQLiteConnection _connection;
 
-		public ContatoViewModel(){}
+		public ContatoViewModel(){
+			_connection = DependencyService.Get<ISQLite>().GetConnection();
+		}
 
 		//Declaração padrão de variaveis
 		private List<ContatoModel> _contatos;
@@ -44,15 +51,28 @@ namespace AppHello.ViewModels
 				IsBusy = true;
 				await APIHelper.Instance.Get();
 				Contatos = JsonConvert.DeserializeObject<List<ContatoModel>>(APIHelper.Instance.Resposta);
+
+				//Gravar no sqllite
+				foreach (var contato in Contatos)
+				{
+					BancoHelper.Instance.InsertOrUpdate(contato);
+				}
+				
 			}
 			catch (Exception e)
 			{
-				throw new Exception(e.Message);
+				Contatos = _connection.Table<ContatoModel>().OrderBy(c => c.Email).ToList();
 			}
 			finally
 			{
 				IsBusy = false;
 			}
+		}
+
+		private async Task Teste()
+		{
+			var texto = DependencyService.Get<ITeste>().CarregarTexto();
+			System.Diagnostics.Debug.WriteLine(texto);
 		}
 	}
 }

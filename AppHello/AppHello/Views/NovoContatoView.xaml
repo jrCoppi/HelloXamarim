@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppHello.Views.NovoContatoView"
              xmlns:converters="clr-namespace:AppHello.Converters"
+             xmlns:controls="clr-namespace:AppHello.Controls"
              Title="Novo Contato">
     <ContentPage.Content>
         <StackLayout Margin="10">
@@ -22,13 +23,19 @@
             <Label 
                 Text="Email"
             />
-            
+
             <!-- Definir tipos diferntes de keyboard -->
             <Entry 
                 Text="{Binding Contato.Email}"
                 Placeholder="Email"
                 Keyboard="Email"
             />
+
+
+            <Label 
+                Text="Contato Ativo"
+            />
+            <controls:CustomSwitch IsToggled="{Binding Contato.Ativo}" />
 
             <Label 
                 Text="Data de Nascimento"
